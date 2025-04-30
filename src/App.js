@@ -5,7 +5,7 @@ import Host from './components/Host';
 import Home from './components/Home';
 
 function App() {
-  const socket = io('https://unenadineenorserver.vercel.app');
+  const socket = io('https://unenadineenorserver.onrender.com');
 
   return (
     <>
