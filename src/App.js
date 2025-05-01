@@ -6,10 +6,11 @@ import Home from './components/Home';
 
 function App() {
   const socket = io('https://unenadineenorserver.onrender.com');
-
+  //const socket = io('http://localhost:4000');
+  
   return (
-    <>
-      <h1>Une Nadine en Or</h1>
+    <div className="app">
+      <h1 className="title">UNE<br/>NADINE<br/>EN OR</h1>
       <BrowserRouter>
         <div>
         <Routes>
@@ -18,7 +19,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

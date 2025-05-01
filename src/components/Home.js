@@ -30,25 +30,25 @@ function Home({ socket }) {
 
     return (
         <div>
-            <h2>Aurel</h2>
             {appInitiated && (
                 <div className="flex flex-col items-center justify-center">
-                    <p>Points: {state.points}</p>
-                    <h2>{state.questions[state.currentQuestion].text}</h2>
-                    <ul>
+                    <p className="score">{state.points}</p>
+                    <h2 className="question">{state.questions[state.currentQuestion].text}</h2>
+                    <ul className="answers">
                         {state.questions[state.currentQuestion].answers.map((answer, index) => (
                             <li className={`tile ${answer.revealed ? 'rotateTile' : ''}`} key={index}>
                                 <div className="tile-front">
-                                    {index + 1}
+                                    <div className="tile-front-number">
+                                        <span>{index + 1}</span>
+                                    </div>
                                 </div>
                                 <div className="tile-back">
-                                    {answer.text} - {answer.points}
+                                    <span className="answer-text">{answer.text}</span><span className="answer-points">{answer.points}</span>
                                 </div>
                             </li>
                         ))}
                     </ul>
                     <div>
-                        <h3>Wrong Guesses</h3>
                         {Array.from({ length: state.questions[state.currentQuestion].wrongGuess }).map((_, index) => (
                             <p key={index}>X</p>
                         ))}
