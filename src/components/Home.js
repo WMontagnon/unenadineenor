@@ -1,32 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSound from 'use-sound';
-import GoodAnswer from '../good-answer.mp3';
-import WrongAnswer from '../wrong-answer.mp3';
+import GoodAnswer from '../assets/goodAnswer.mp3';
+import WrongAnswer from '../assets/badAnswer.mp3';
 
 function Home({ socket }) {
     const [appInitiated, setAppInitiated] = useState(false);
     const [state, setState] = useState(null);
 
-    const [playGoodAnswer] = useSound(GoodAnswer, { volume: 0.05 });
-    const [playWrongAnswer] = useSound(WrongAnswer, { volume: 0.05 });
-    socket.on('appInit', (state) => {
-        setState(state);
-        setAppInitiated(true);
-    });
+    const [playGoodAnswer] = useSound(GoodAnswer, { volume: 0.5 });
+    const [playWrongAnswer] = useSound(WrongAnswer, { volume: 0.5 });
 
-    socket.on('answerReveal', (state) => {
-        setState(state);
-        playGoodAnswer();
-    });
+    useEffect(() => {
+        function onAppInit(state) {
+            setState(state);
+            setAppInitiated(true);
+        }
 
-    socket.on('wrongGuess', (state) => {
-        setState(state);
-        playWrongAnswer();
-    });
+        function onAnswerReveal(state) {
+            setState(state);
+            playGoodAnswer();
+        }
 
-    socket.on('stateUpdate', (state) => {
-        setState(state);
-    });
+        function onWrongGuess(state) {
+            setState(state);
+            playWrongAnswer();
+        }
+
+        function onStateUpdate(state) {
+            setState(state);
+        }
+
+        socket.on('appInit', onAppInit);
+        socket.on('answerReveal', onAnswerReveal);
+        socket.on('wrongGuess', onWrongGuess);
+        socket.on('stateUpdate', onStateUpdate);
+
+        return () => {
+            socket.off('appInit', onAppInit);
+            socket.off('answerReveal', onAnswerReveal);
+            socket.off('wrongGuess', onWrongGuess);
+            socket.off('stateUpdate', onStateUpdate);
+        };
+    }, []);
 
     return (
         <>
@@ -69,6 +84,9 @@ function Home({ socket }) {
                     <div className="game-container">
                         <h1 className="title">UNE<br/><span className="title-span">NADINE</span><br/>EN OR</h1>
                         <p className="score">{state.points}</p>
+                        <button className="button mtopauto" onClick={() => {
+                            Math.random() > 0.5 ? playGoodAnswer() : playWrongAnswer();
+                        }}>Test audio</button>
                     </div>
                 </div>
             )}
