@@ -5,6 +5,7 @@ import Host from './components/Host';
 import Home from './components/Home';
 
 function App() {
+  console.log(process.env);
   const socket = process.env.SERVER_URL ? io(process.env.SERVER_URL) : io('http://localhost:4000');
 
   return (
