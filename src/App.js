@@ -5,8 +5,7 @@ import Host from './components/Host';
 import Home from './components/Home';
 
 function App() {
-  const socket = io('https://unenadineenorserver.onrender.com');
-  //const socket = io('http://localhost:4000');
+  const socket = process.env.SERVER_URL ? io(process.env.SERVER_URL) : io('http://localhost:4000');
 
   return (
       <BrowserRouter>

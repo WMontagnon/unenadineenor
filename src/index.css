@@ -41,6 +41,25 @@ body {
   align-items: center;
 }
 
+.loading-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  animation: leaves 1s ease-in-out infinite alternate;
+  -webkit-animation: leaves 1s ease-in-out infinite alternate;
+}
+
+@keyframes leaves {
+  0% {
+      transform: scale(1.0);
+  }
+  100% {
+      transform: scale(1.2);
+  }
+}
+
 .left-circle-large{
   display: flex;
   align-items: center;

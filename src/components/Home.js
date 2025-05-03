@@ -45,6 +45,13 @@ function Home({ socket }) {
 
     return (
         <>
+            {!appInitiated && (
+                <div className="global-container">
+                    <div className="loading-container">
+                        <h1 className="title">UNE<br/><span className="title-span">NADINE</span><br/>EN OR</h1>
+                    </div>
+                </div>
+            )}
             {appInitiated && (
                 <div className="global-container">
                     <div className="question-container">
