@@ -6,7 +6,7 @@ import Home from './components/Home';
 
 function App() {
   console.log(process.env);
-  const socket = process.env.SERVER_URL ? io(process.env.SERVER_URL) : io('http://localhost:4000');
+  const socket = process.env.REACT_APP_SERVER_URL ? io(process.env.REACT_APP_SERVER_URL) : io('http://localhost:4000');
 
   return (
       <BrowserRouter>
