@@ -51,6 +51,7 @@ body {
   border-bottom-left-radius: 400px;
   background-color: #d4ae16;
   border: 2px solid black;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .left-circle-medium{
@@ -64,6 +65,7 @@ body {
   background-color: #aa8d18;
   border: 2px solid black;
   border-right-width: 0px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .left-circle-small{
@@ -74,6 +76,7 @@ body {
   background-color: #806613;
   border: 2px solid black;
   border-right-width: 0px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .right-circle-large{
@@ -86,6 +89,7 @@ body {
   border-bottom-right-radius: 400px;
   background-color: #d4ae16;
   border: 2px solid black;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .right-circle-medium{
@@ -99,6 +103,7 @@ body {
   background-color: #aa8d18;
   border: 2px solid black;
   border-left-width: 0px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .right-circle-small{
@@ -109,6 +114,7 @@ body {
   background-color: #806613;
   border: 2px solid black;
   border-left-width: 0px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .title{
@@ -118,6 +124,7 @@ body {
   color: #d4ae16;
   margin-bottom: 100px;
   font-size: 65px;
+  text-shadow: 0px 0px 10px #806613;
   
   .title-span{
     font-size: 80px;
@@ -131,6 +138,7 @@ body {
   width: 400px;
   margin: 0 auto;
   margin-bottom: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .question{
@@ -141,6 +149,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .answers{
@@ -148,6 +157,7 @@ body {
   margin-bottom: 20px;
   width: 400px;
   list-style-type: none;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   
   .tile {
     position: relative;
@@ -265,6 +275,7 @@ body {
 
 .mtopauto{
   margin-top: auto;
+  margin-left: auto;
 }
 
 .wrong-guesses{
@@ -275,6 +286,7 @@ body {
   padding: 10px;
   height: 150px;
   background-color: black;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   
   .wrong-guess{
     color: rgb(144, 39, 39);
