@@ -41,7 +41,7 @@ function Home({ socket }) {
             socket.off('wrongGuess', onWrongGuess);
             socket.off('stateUpdate', onStateUpdate);
         };
-    }, []);
+    }, [playGoodAnswer, playWrongAnswer, socket]);
 
     return (
         <>
