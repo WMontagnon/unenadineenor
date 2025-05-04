@@ -89,7 +89,7 @@ body {
   background-color: #aa8d18;
   border: 2px solid black;
   border-right-width: 0px;
-  box-shadow: 0px 0px 10px 0px #aa8d18;
+  box-shadow: -10px 0px 10px -10px #aa8d18;
 }
 
 .left-circle-small{
@@ -100,7 +100,7 @@ body {
   background-color: #806613;
   border: 2px solid black;
   border-right-width: 0px;
-  box-shadow: 0px 0px 10px 0px #806613;
+  box-shadow: -10px 0px 10px -10px #806613;
 }
 
 .right-circle-large{
@@ -127,7 +127,7 @@ body {
   background-color: #aa8d18;
   border: 2px solid black;
   border-left-width: 0px;
-  box-shadow: 0px 0px 10px 0px #aa8d18;
+  box-shadow: 10px 0px 10px -10px #aa8d18;
 }
 
 .right-circle-small{
@@ -138,7 +138,7 @@ body {
   background-color: #806613;
   border: 2px solid black;
   border-left-width: 0px;
-  box-shadow: 0px 0px 10px 0px #806613;
+  box-shadow: 10px 0px 10px -10px #806613;
 }
 
 .title{
