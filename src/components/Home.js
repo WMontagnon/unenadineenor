@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import useSound from 'use-sound';
 import GoodAnswer from '../assets/goodAnswer.mp3';
 import WrongAnswer from '../assets/badAnswer.mp3';
+import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
 
 function Home({ socket }) {
     const [appInitiated, setAppInitiated] = useState(false);
     const [state, setState] = useState(null);
+    const [audioEnabled, setAudioEnabled] = useState(true);
 
-    const [playGoodAnswer] = useSound(GoodAnswer, { volume: 0.5 });
-    const [playWrongAnswer] = useSound(WrongAnswer, { volume: 0.5 });
+    const [playGoodAnswer] = useSound(GoodAnswer, { volume: audioEnabled ? 0.5 : 0 });
+    const [playWrongAnswer] = useSound(WrongAnswer, { volume: audioEnabled ? 0.5 : 0 });
 
     useEffect(() => {
         function onAppInit(state) {
@@ -91,9 +93,14 @@ function Home({ socket }) {
                     <div className="game-container">
                         <h1 className="title">UNE<br/><span className="title-span">NADINE</span><br/>EN OR</h1>
                         <p className="score">{state.points}</p>
-                        <button className="button mtopauto" onClick={() => {
-                            Math.random() > 0.5 ? playGoodAnswer() : playWrongAnswer();
-                        }}>Test audio</button>
+                        <div className="audio-container mtopauto">
+                            <button className="button" onClick={() => {
+                                Math.random() > 0.5 ? playGoodAnswer() : playWrongAnswer();
+                            }}>Test audio</button>
+                            <button className="button" onClick={() => {
+                                setAudioEnabled(!audioEnabled);
+                            }}>{audioEnabled ? <HiMiniSpeakerWave /> : <HiMiniSpeakerXMark />}</button>
+                        </div>
                     </div>
                 </div>
             )}
