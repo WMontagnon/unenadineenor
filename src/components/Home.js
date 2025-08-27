@@ -45,6 +45,22 @@ function Home({ socket }) {
         };
     }, [playGoodAnswer, playWrongAnswer, socket]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'a') {
+                playGoodAnswer();
+            } else if (e.key === 'p') {
+                playWrongAnswer();
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown, true);
+    
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    
+    }, [playGoodAnswer, playWrongAnswer]);
+
     return (
         <>
             {!appInitiated && (
