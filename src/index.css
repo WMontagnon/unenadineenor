@@ -183,6 +183,10 @@ body {
   box-shadow: 0px 0px 10px 0px #196086;
 }
 
+.hidden-question{
+  color: transparent;
+}
+
 .answers{
   margin: 0 auto;
   margin-bottom: 20px;
@@ -333,5 +337,38 @@ body {
   font-size: 30px;
   cursor: pointer;
   color: #d4ae16;
+}
+
+.final-timer{
+  font-size: 100px;
+  background-color: rgb(184, 1, 1);
+  box-shadow: 0px 0px 15px 0px #d4ae16 inset;
+  color: white;
+  width: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.final-answers {
+  background-color: black;
+  color: #d4ae16;
+  font-family: "LCD", "Helvetica Neue";
+  text-transform: uppercase;
+  font-size: 50px;
+  width: 500px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px 0px #196086;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+
+  span:nth-child(odd) {
+    text-align: right;
+  }
+  span:nth-child(even) {
+    text-align: left;
+  }
 }
 
