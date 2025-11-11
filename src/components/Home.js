@@ -76,7 +76,7 @@ function Home({ socket }) {
             socket.off('playCredits', onPlayCredits);
             socket.off('stopCredits', onStopCredits);
         };
-    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, socket]);
+    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, sound, stop, socket]);
 
     return (
         <>

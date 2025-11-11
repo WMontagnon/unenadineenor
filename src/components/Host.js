@@ -107,6 +107,8 @@ function Host({ socket }) {
                                     return acc + question.answers.reduce((acc, answer) => acc + answer.points, 0) * 2;
                                 }else if(index === 4){
                                     return acc + question.answers.reduce((acc, answer) => acc + answer.points, 0) * 3;
+                                } else {
+                                    return acc;
                                 }
                             }, 0)}</p>
                         )}
