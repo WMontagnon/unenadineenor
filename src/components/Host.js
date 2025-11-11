@@ -6,7 +6,7 @@ function Host({ socket }) {
     const [duration, setDuration] = useState(0);
     const [finalTimer, setFinalTimer] = useState(0);
 
-    const [finalQuestionExpandedIndex, setFinalQuestionExpandedIndex] = useState([]);
+    const [finalQuestionSelectedIndex, setFinalQuestionSelectedIndex] = useState(null);
 
     socket.on('appInit', (state) => {
         setState(state);
@@ -37,37 +37,36 @@ function Host({ socket }) {
             {appInitiated && (
                 <div className="global-container">
                     {state.isFinal ? (
-                        <div>
-                            <div>
+                        <div className="final-container">
+                            <div className="final-timer-container">
                                 <h2>Démarrer une manche</h2>
                                 <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Durée de la manche (en secondes)" />
                                 <button className="button" onClick={() => socket.emit('startFinal', duration)} disabled={duration === 0}>Démarrer</button>
+                                <p>Temps restant : {finalTimer} secondes</p>
+                                <button className="button" onClick={() => socket.emit('pauseFinalTimer')}>Pause</button>
+                                <button className="button" onClick={() => socket.emit('resumeFinalTimer')}>Reprendre</button>
                             </div>
-                            <p>Temps restant : {finalTimer} secondes</p>
-                            <button className="button" onClick={() => socket.emit('pauseFinalTimer')}>Pause</button>
-                            <button className="button" onClick={() => socket.emit('resumeFinalTimer')}>Reprendre</button>
-                            <div>
-                                <h2>Questions <button className="button" onClick={() => setFinalQuestionExpandedIndex([])}>Tout replier</button></h2>
-                                <ul className="">
-                                    {state.finalQuestions.map((question, questionIndex) => (
-                                        <li className="" key={questionIndex}>
-                                            <p>{question.text} <button className="button" onClick={() => setFinalQuestionExpandedIndex(finalQuestionExpandedIndex.includes(questionIndex) ? finalQuestionExpandedIndex.filter((index) => index !== questionIndex) : [...finalQuestionExpandedIndex, questionIndex])}>{finalQuestionExpandedIndex.includes(questionIndex) ? 'Réduire' : 'Déplier'}</button></p>
-                                            {finalQuestionExpandedIndex.includes(questionIndex) && ( 
-                                                <ul>
-                                                    {question.answers.map((answer, answerIndex) => (
-                                                        <li key={answerIndex}>
-                                                            <p>
-                                                                {answer.text} - {answer.points} / 
-                                                                &nbsp;{question.revealedAnswerFirstRunIndex === answerIndex ? 1 : <button className="button" disabled={question.revealedAnswerSecondRunIndex === answerIndex} onClick={() => socket.emit('revealFinalQuestionFirstRun', { questionIndex, answerIndex })}>1</button>}
-                                                                &nbsp;{question.revealedAnswerSecondRunIndex === answerIndex ? 2 : <button className="button" disabled={question.revealedAnswerFirstRunIndex === answerIndex} onClick={() => socket.emit('revealFinalQuestionSecondRun', { questionIndex, answerIndex })}>2</button>}
-                                                            </p>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </li>
+                            <div className="final-questions-container">
+                                <div>
+                                    <h2>Questions</h2>
+                                    <ul className="final-questions">
+                                        {state.finalQuestions.map((question, questionIndex) => (
+                                            <li className="final-question" key={questionIndex}>
+                                                <p onClick={() => setFinalQuestionSelectedIndex(questionIndex)} className="final-question-text">{question.text}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h2>Réponses</h2>
+                                    {finalQuestionSelectedIndex !== null && state.finalQuestions[finalQuestionSelectedIndex].answers.map((answer, answerIndex) => (
+                                        <div key={answerIndex}>
+                                            <span>{answer.text} - {answer.points}</span>
+                                            &nbsp;{state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex === answerIndex ? <span>1</span> : <button className="button" disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex !== null} onClick={() => socket.emit('revealFinalQuestionFirstRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}>1</button>}
+                                            &nbsp;{state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex === answerIndex ? <span>2</span> : <button className="button" disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex !== null} onClick={() => socket.emit('revealFinalQuestionSecondRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}>2</button>}
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     ) : (

@@ -139,7 +139,7 @@ function Home({ socket }) {
                     )}
                     <div className="game-container">
                         <h1 className="title">UNE<br/><span className="title-span">NADINE</span><br/>EN OR</h1>
-                        <p className="score">{state.points}</p>
+                        <p className="score">{state.isFinal ? state.finalPoints : state.points}</p>
                         <div className="audio-container mtopauto">
                             <button className="button" onClick={() => {
                                 Math.random() > 0.5 ? playGoodAnswer() : playWrongAnswer();
