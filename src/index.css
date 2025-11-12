@@ -320,6 +320,10 @@ body {
     box-shadow: none;
     transform: translate(3px, 3px);
   }
+
+  &:disabled{
+    box-shadow: none;
+  }
 }
 
 .mtopauto{
