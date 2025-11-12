@@ -39,7 +39,7 @@ function Host({ socket }) {
                     {state.isFinal ? (
                         <div className="final-host-container">
                             <div className="final-timer-container">
-                                <div>
+                                <div className="final-timer-controls">
                                     <h2>Démarrer une manche</h2>
                                     <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Durée de la manche (en secondes)" />
                                     <div>
@@ -63,6 +63,7 @@ function Host({ socket }) {
                                 </div>
                                 <div>
                                     <h2>Réponses</h2>
+                                    <div className="final-answers-container">
                                     {finalQuestionSelectedIndex !== null && state.finalQuestions[finalQuestionSelectedIndex].answers.map((answer, answerIndex) => (
                                         <div className="final-answer" key={answerIndex}>
                                             {
@@ -90,13 +91,20 @@ function Host({ socket }) {
                                             }
                                         </div>
                                     ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     ) : (
                         <div>
                             <h2 className="question">{state.questions[state.currentQuestion].text}</h2>
-                            <button className="button show-question-button" disabled={state.questions[state.currentQuestion].revealed} onClick={() => socket.emit('showQuestion')}>Afficher la question</button>
+                            <div className="question-controls">
+                                <span>{state.currentQuestion + 1} / {state.questions.length}</span>
+                                <button className="button" onClick={() => socket.emit('previousQuestion')} disabled={state.currentQuestion === 0}>&lt;</button>
+                                <button className="button" onClick={() => socket.emit('nextQuestion')} disabled={state.currentQuestion === state.questions.length - 1}>&gt;</button>
+                                <button className="button" onClick={() => socket.emit('wrongGuess')} disabled={state.questions[state.currentQuestion].wrongGuess > 2}>X</button>
+                                <button className="button" disabled={state.questions[state.currentQuestion].revealed} onClick={() => socket.emit('showQuestion')}>Afficher la question</button>
+                            </div>
                             <ul className="answers">
                                 {state.questions[state.currentQuestion].answers.map((answer, index) => (
                                 <li className="host-answer" key={index}>
@@ -109,12 +117,6 @@ function Host({ socket }) {
                                 {Array.from({ length: state.questions[state.currentQuestion].wrongGuess }).map((_, index) => (
                                     <p className="wrong-guess" key={index}>X</p>
                                 ))}
-                            </div>
-                            <div>
-                                <p>Question {state.currentQuestion + 1} / {state.questions.length}</p>
-                                <button className="button" onClick={() => socket.emit('previousQuestion')} disabled={state.currentQuestion === 0}>&lt;</button>
-                                <button className="button" onClick={() => socket.emit('nextQuestion')} disabled={state.currentQuestion === state.questions.length - 1}>&gt;</button>
-                                <button className="button" onClick={() => socket.emit('wrongGuess')} disabled={state.questions[state.currentQuestion].wrongGuess > 2}>X</button>
                             </div>
                         </div>
                     )}    
@@ -136,14 +138,19 @@ function Host({ socket }) {
                             }, 0)}</p>
                         )}
                         <div className="buttons">
-                            {state.isFinal ? (
-                                <button className="button" onClick={() => socket.emit('deactivateFinal')}>Désactiver la finale</button>
-                            ) : (
-                                <button className="button" onClick={() => socket.emit('activateFinal')}>Activer la finale</button>
-                            )}
-                            <button className="button" onClick={() => socket.emit('startCredits')}>Jouer Générique</button>
-                            <button className="button" onClick={() => socket.emit('stopCredits')}>Arrêter Générique</button>
-                            <button className="button" onClick={() => socket.emit('resetGame')}>Réinitialiser le jeu</button>
+                            <div className='grid-2'>
+                                {state.isFinal ? (
+                                    <button className="button" onClick={() => socket.emit('deactivateFinal')}>Désactiver la finale</button>
+                                ) : (
+                                    <button className="button" onClick={() => socket.emit('activateFinal')}>Activer la finale</button>
+                                )}
+                                <button className="button" onClick={() => socket.emit('resetGame')}>Réinitialiser le jeu</button>
+                            </div>
+                            <div className='grid-3'>
+                                <button className="button" onClick={() => socket.emit('startCredits')}>Jouer Générique</button>
+                                <button className="button" onClick={() => socket.emit('stopCredits')}>Arrêter Générique</button>
+                                <button className="button" onClick={() => socket.emit('buzzer')}>Buzzer</button>
+                            </div>
                         </div>
                     </div>                 
                 </div>

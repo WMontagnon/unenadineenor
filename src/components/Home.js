@@ -5,6 +5,7 @@ import WrongAnswer from '../assets/badAnswer.mp3';
 import CreditSong from '../assets/credits.mp3';
 import StartFinal from '../assets/startFinale.mp3';
 import GoodAnswerFinale from '../assets/goodAnswerFinale.mp3';
+import Buzzer from '../assets/buzzer.mp3';
 
 function Home({ socket }) {
     const [appInitiated, setAppInitiated] = useState(false);
@@ -16,6 +17,7 @@ function Home({ socket }) {
     const [playCreditSong, { stop: stopCreditSong, sound: creditSongSound }] = useSound(CreditSong);
     const [playStartFinal] = useSound(StartFinal);
     const [playGoodAnswerFinale] = useSound(GoodAnswerFinale);
+    const [playBuzzer] = useSound(Buzzer);
 
     useEffect(() => {
         function onAppInit(state) {
@@ -74,6 +76,8 @@ function Home({ socket }) {
         socket.on('playCredits', onPlayCredits);
         socket.on('stopCredits', onStopCredits);
 
+        socket.on('buzzer', playBuzzer);
+
         return () => {
             socket.off('appInit', onAppInit);
             socket.off('answerReveal', onAnswerReveal);
@@ -85,7 +89,7 @@ function Home({ socket }) {
             socket.off('playCredits', onPlayCredits);
             socket.off('stopCredits', onStopCredits);
         };
-    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, creditSongSound, stopCreditSong, socket, playGoodAnswerFinale]);
+    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, creditSongSound, stopCreditSong, socket, playGoodAnswerFinale, playBuzzer]);
 
     return (
         <>

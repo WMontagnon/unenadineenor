@@ -185,7 +185,7 @@ body {
 }
 
 .score-host{
-  font-size: 100px;
+  font-size: 80px;
 }
 
 .question{
@@ -197,10 +197,6 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0px 0px 10px 0px #196086;
-}
-
-.show-question-button{
-  margin-bottom: 20px;
 }
 
 .hidden-question{
@@ -305,8 +301,6 @@ body {
 }
 
 .buttons{
-  display: flex;
-  gap: 10px;
   margin: 0 auto;
   width: 400px;
 }
@@ -405,13 +399,29 @@ body {
 .final-host-container{
   display: grid;
   grid-template-rows: 200px 1fr;
-  align-self: stretch;
+  align-items: center;
   gap: 20px;
 
   .final-timer-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+
+    .final-timer-controls{
+      padding: 10px 20px;
+      h2{
+        margin-bottom: 10px;
+      }
+      input{
+        margin-bottom: 10px;
+        height: 30px;
+      }
+      div{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+    }
   }
 
   .final-questions{
@@ -422,6 +432,11 @@ body {
     margin: 0;
   }
 
+  .final-answers-container{
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
   .final-answer{
     display: grid;
     grid-template-columns: 15% 70% 15%;
@@ -429,6 +444,10 @@ body {
     padding: 10px;
     background-color: black;
     color: #d4ae16;
+
+    span {
+      padding: 10px;
+    }
   }
 }
 
@@ -445,3 +464,35 @@ body {
   padding: 10px;
 }
 
+.question-controls{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+  span{
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.grid-2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.grid-3{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: stretch;
+  gap: 10px;
+
+  button{
+    height: 100%;
+  }
+}
