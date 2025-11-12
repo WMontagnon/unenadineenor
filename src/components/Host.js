@@ -55,7 +55,7 @@ function Host({ socket }) {
                                     <h2>Questions</h2>
                                     <ul className="final-questions">
                                         {state.finalQuestions.map((question, questionIndex) => (
-                                            <li className="final-question" key={questionIndex}>
+                                            <li className={`final-question ${finalQuestionSelectedIndex === questionIndex ? 'final-question-selected' : ''}`} key={questionIndex}>
                                                 <p onClick={() => setFinalQuestionSelectedIndex(questionIndex)} className="final-question-text">{question.text}</p>
                                             </li>
                                         ))}

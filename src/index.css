@@ -437,8 +437,13 @@ body {
     margin: 0;
   }
 
+  .final-question-selected{
+    background-color: #d4ae16;
+    color: black;
+  }
+
   .final-answers-container{
-    max-height: 500px;
+    height: 500px;
     overflow-y: auto;
   }
 
