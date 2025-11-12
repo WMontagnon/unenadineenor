@@ -379,6 +379,7 @@ body {
     background-color: black;
     color: #d4ae16;
     font-family: "LCD", "Helvetica Neue";
+    font-weight: bold;
     text-transform: uppercase;
     font-size: 40px;
     width: 100%;
