@@ -4,18 +4,18 @@ import GoodAnswer from '../assets/goodAnswer.mp3';
 import WrongAnswer from '../assets/badAnswer.mp3';
 import CreditSong from '../assets/credits.mp3';
 import StartFinal from '../assets/startFinale.mp3';
-import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
+import GoodAnswerFinale from '../assets/goodAnswerFinale.mp3';
 
 function Home({ socket }) {
     const [appInitiated, setAppInitiated] = useState(false);
     const [state, setState] = useState(null);
-    const [audioEnabled, setAudioEnabled] = useState(true);
     const [finalTimer, setFinalTimer] = useState(0);
 
-    const [playGoodAnswer] = useSound(GoodAnswer, { volume: audioEnabled ? 0.5 : 0 });
-    const [playWrongAnswer] = useSound(WrongAnswer, { volume: audioEnabled ? 0.5 : 0 });
-    const [playCreditSong, { sound, stop }] = useSound(CreditSong, { volume: audioEnabled ? 0.5 : 0 });
-    const [playStartFinal] = useSound(StartFinal, { volume: audioEnabled ? 0.5 : 0 });
+    const [playGoodAnswer] = useSound(GoodAnswer);
+    const [playWrongAnswer] = useSound(WrongAnswer);
+    const [playCreditSong, { stop: stopCreditSong, sound: creditSongSound }] = useSound(CreditSong);
+    const [playStartFinal] = useSound(StartFinal);
+    const [playGoodAnswerFinale] = useSound(GoodAnswerFinale);
 
     useEffect(() => {
         function onAppInit(state) {
@@ -44,17 +44,24 @@ function Home({ socket }) {
 
         function onFinalTimerUpdate(duration) {
             setFinalTimer(duration);
+            if(duration == 0) {
+                playWrongAnswer();
+            }
+        }
+
+        function onRevealFinalAnswer(state) {
+            setState(state);
+            playGoodAnswerFinale();
         }
 
         function onPlayCredits() {
-            playCreditSong();
+            if(!creditSongSound.playing()) {
+                playCreditSong();
+            }
         }
 
         function onStopCredits() {
-            sound.fade(0.5, 0, 3000);
-            setTimeout(() => {
-                stop();
-            }, 3000);
+            stopCreditSong();
         }
 
         socket.on('appInit', onAppInit);
@@ -63,6 +70,7 @@ function Home({ socket }) {
         socket.on('stateUpdate', onStateUpdate);
         socket.on('startFinalTimer', onStartFinalTimer);
         socket.on('finalTimerUpdate', onFinalTimerUpdate);
+        socket.on('revealFinalAnswer', onRevealFinalAnswer);
         socket.on('playCredits', onPlayCredits);
         socket.on('stopCredits', onStopCredits);
 
@@ -73,15 +81,16 @@ function Home({ socket }) {
             socket.off('stateUpdate', onStateUpdate);
             socket.off('startFinalTimer', onStartFinalTimer);
             socket.off('finalTimerUpdate', onFinalTimerUpdate);
+            socket.off('revealFinalAnswer', onRevealFinalAnswer);
             socket.off('playCredits', onPlayCredits);
             socket.off('stopCredits', onStopCredits);
         };
-    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, sound, stop, socket]);
+    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, creditSongSound, stopCreditSong, socket]);
 
     return (
         <>
             {!appInitiated && (
-                <div className="global-container">
+                <div className="loader-container">
                     <div className="loading-container">
                         <h1 className="title">UNE<br/><span className="title-span">NADINE</span><br/>EN OR</h1>
                     </div>
@@ -125,7 +134,7 @@ function Home({ socket }) {
                             </div>
                         </div>
                     ) : (
-                        <div>
+                        <div className="final-container">
                             <div className="final-timer">{finalTimer}</div>
                             <div className="final-answers">
                                 {state.finalQuestions.map((question) => (
@@ -144,9 +153,6 @@ function Home({ socket }) {
                             <button className="button" onClick={() => {
                                 Math.random() > 0.5 ? playGoodAnswer() : playWrongAnswer();
                             }}>Test audio</button>
-                            <button className="button" onClick={() => {
-                                setAudioEnabled(!audioEnabled);
-                            }}>{audioEnabled ? <HiMiniSpeakerWave /> : <HiMiniSpeakerXMark />}</button>
                         </div>
                     </div>
                 </div>

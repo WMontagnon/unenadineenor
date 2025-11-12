@@ -37,14 +37,18 @@ function Host({ socket }) {
             {appInitiated && (
                 <div className="global-container">
                     {state.isFinal ? (
-                        <div className="final-container">
+                        <div className="final-host-container">
                             <div className="final-timer-container">
-                                <h2>Démarrer une manche</h2>
-                                <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Durée de la manche (en secondes)" />
-                                <button className="button" onClick={() => socket.emit('startFinal', duration)} disabled={duration === 0}>Démarrer</button>
-                                <p>Temps restant : {finalTimer} secondes</p>
-                                <button className="button" onClick={() => socket.emit('pauseFinalTimer')}>Pause</button>
-                                <button className="button" onClick={() => socket.emit('resumeFinalTimer')}>Reprendre</button>
+                                <div>
+                                    <h2>Démarrer une manche</h2>
+                                    <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Durée de la manche (en secondes)" />
+                                    <div>
+                                        <button className="button" onClick={() => socket.emit('startFinal', duration)} disabled={duration === 0}>Démarrer</button>
+                                        <button className="button" onClick={() => socket.emit('pauseFinalTimer')}>Pause</button>
+                                        <button className="button" onClick={() => socket.emit('resumeFinalTimer')}>Reprendre</button>
+                                    </div>
+                                </div>
+                                <div className="final-timer">{finalTimer}</div>
                             </div>
                             <div className="final-questions-container">
                                 <div>
@@ -60,10 +64,30 @@ function Host({ socket }) {
                                 <div>
                                     <h2>Réponses</h2>
                                     {finalQuestionSelectedIndex !== null && state.finalQuestions[finalQuestionSelectedIndex].answers.map((answer, answerIndex) => (
-                                        <div key={answerIndex}>
-                                            <span>{answer.text} - {answer.points}</span>
-                                            &nbsp;{state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex === answerIndex ? <span>1</span> : <button className="button" disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex !== null} onClick={() => socket.emit('revealFinalQuestionFirstRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}>1</button>}
-                                            &nbsp;{state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex === answerIndex ? <span>2</span> : <button className="button" disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex !== null} onClick={() => socket.emit('revealFinalQuestionSecondRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}>2</button>}
+                                        <div className="final-answer" key={answerIndex}>
+                                            {
+                                                state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex === answerIndex
+                                                    ? <button className="button" disabled>1</button>
+                                                    : state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex !== null
+                                                        ? <span></span>
+                                                        : <button
+                                                            className="button"
+                                                            disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerFirstRunIndex !== null}
+                                                            onClick={() => socket.emit('revealFinalQuestionFirstRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}
+                                                        >1</button>
+                                            }
+                                            <span> {answer.text} - {answer.points} </span>
+                                            {
+                                                state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex === answerIndex
+                                                    ? <button className="button" disabled>2</button>
+                                                    : state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex !== null
+                                                        ? <span></span>
+                                                        : <button
+                                                            className="button"
+                                                            disabled={state.finalQuestions[finalQuestionSelectedIndex].revealedAnswerSecondRunIndex !== null}
+                                                            onClick={() => socket.emit('revealFinalQuestionSecondRun', { questionIndex: finalQuestionSelectedIndex, answerIndex })}
+                                                        >2</button>
+                                            }
                                         </div>
                                     ))}
                                 </div>
@@ -72,7 +96,7 @@ function Host({ socket }) {
                     ) : (
                         <div>
                             <h2 className="question">{state.questions[state.currentQuestion].text}</h2>
-                            <button className="button" disabled={state.questions[state.currentQuestion].revealed} onClick={() => socket.emit('showQuestion')}>Afficher la question</button>
+                            <button className="button show-question-button" disabled={state.questions[state.currentQuestion].revealed} onClick={() => socket.emit('showQuestion')}>Afficher la question</button>
                             <ul className="answers">
                                 {state.questions[state.currentQuestion].answers.map((answer, index) => (
                                 <li className="host-answer" key={index}>
@@ -99,7 +123,7 @@ function Host({ socket }) {
                         {state.isFinal ? (
                             <p className="score">{state.finalPoints}</p>
                         ) : (
-                            <p className="score">{state.points}/{state.questions.reduce((acc, question, index) => {
+                            <p className="score score-host">{state.points}/{state.questions.reduce((acc, question, index) => {
                                 if(index < 3){
                                     return acc + question.answers.reduce((acc, answer) => acc + answer.points, 0);
                                 }else if(index === 3){

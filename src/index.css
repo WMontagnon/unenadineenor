@@ -3,8 +3,9 @@
 @font-face {
   font-family: "LCD";   /*Can be any text*/
   src: local("LCD"),
-    url("./assets/lcd.ttf") format("truetype");
+    url("assets/doto.ttf") format("truetype");
 }
+
 
 *{
   margin: 0;
@@ -20,6 +21,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.loader-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #4190bc;
+
+  .title{
+    text-align: center;
+  }
+}
 
 .global-container{
   display: grid;
@@ -171,6 +184,10 @@ body {
   box-shadow: 0px 0px 10px 0px #196086;
 }
 
+.score-host{
+  font-size: 100px;
+}
+
 .question{
   background-color: #d4ae16;
   color: black;
@@ -180,6 +197,10 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0px 0px 10px 0px #196086;
+}
+
+.show-question-button{
+  margin-bottom: 20px;
 }
 
 .hidden-question{
@@ -344,52 +365,77 @@ body {
   box-shadow: 0px 0px 15px 0px #d4ae16 inset;
   color: white;
   width: 200px;
+  height: 120px;
   border-radius: 50%;
   margin: 0 auto;
   margin-bottom: 20px;
 }
 
-.final-answers {
-  background-color: black;
-  color: #d4ae16;
-  font-family: "LCD", "Helvetica Neue";
-  text-transform: uppercase;
-  font-size: 50px;
-  width: 500px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  box-shadow: 0px 0px 10px 0px #196086;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 20px;
-
-  span:nth-child(odd) {
-    text-align: right;
-  }
-  span:nth-child(even) {
-    text-align: left;
+.final-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  .final-answers {
+    background-color: black;
+    color: #d4ae16;
+    font-family: "LCD", "Helvetica Neue";
+    text-transform: uppercase;
+    font-size: 40px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 10px 0px #196086;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    padding: 10px;
+  
+    span:nth-child(odd) {
+      text-align: right;
+    }
+    span:nth-child(even) {
+      text-align: left;
+    }
   }
 }
 
-.final-container{
+.final-host-container{
   display: grid;
   grid-template-rows: 200px 1fr;
   align-self: stretch;
   gap: 20px;
+
+  .final-timer-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .final-questions{
+    background-color: black;
+    color: #d4ae16;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .final-answer{
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    height: 60px;
+    padding: 10px;
+    background-color: black;
+    color: #d4ae16;
+  }
 }
 
 .final-questions-container{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-}
-
-.final-questions{
-  background-color: black;
-  color: #d4ae16;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 }
 
 .final-question-text{
