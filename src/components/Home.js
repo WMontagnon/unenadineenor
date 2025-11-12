@@ -44,7 +44,7 @@ function Home({ socket }) {
 
         function onFinalTimerUpdate(duration) {
             setFinalTimer(duration);
-            if(duration == 0) {
+            if(duration === 0) {
                 playWrongAnswer();
             }
         }
@@ -85,7 +85,7 @@ function Home({ socket }) {
             socket.off('playCredits', onPlayCredits);
             socket.off('stopCredits', onStopCredits);
         };
-    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, creditSongSound, stopCreditSong, socket]);
+    }, [playGoodAnswer, playWrongAnswer, playCreditSong, playStartFinal, creditSongSound, stopCreditSong, socket, playGoodAnswerFinale]);
 
     return (
         <>
